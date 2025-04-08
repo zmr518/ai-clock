@@ -1,0 +1,397 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display", "Helvetica Neue", Arial, sans-serif;
+}
+
+body {
+    background: #000000;
+    color: #ffffff;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.container {
+    width: 100%;
+    max-width: 800px;
+    padding: 20px;
+    background: #000000;
+    border-radius: 20px;
+}
+
+.clock {
+    text-align: center;
+    padding: 40px;
+    background: #000000;
+    border-radius: 16px;
+    margin: 20px 0;
+    position: relative;
+    overflow: hidden;
+}
+
+.clock::before {
+    content: none;
+}
+
+@keyframes rotate {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+.time {
+    font-size: 84px;
+    font-weight: 200;
+    letter-spacing: 2px;
+    margin-bottom: 10px;
+    text-shadow: none;
+    position: relative;
+    color: #ffffff;
+}
+
+.date {
+    font-size: 20px;
+    color: #8e8e93;
+    font-weight: 400;
+    text-shadow: none;
+}
+
+.tabs {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 30px;
+    padding: 10px;
+    background: #1c1c1e;
+    border-radius: 12px;
+    border: none;
+}
+
+.tab {
+    color: #8e8e93;
+    text-decoration: none;
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-size: 16px;
+    transition: all 0.3s ease;
+    position: relative;
+    background: transparent;
+}
+
+.tab:hover {
+    color: #ffffff;
+    background: transparent;
+    transform: none;
+}
+
+.tab.active {
+    color: #007aff;
+    background: transparent;
+}
+
+.tab.active::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 20px;
+    height: 2px;
+    background: #007aff;
+    border-radius: 2px;
+}
+
+.alarm-list {
+    margin-top: 20px;
+}
+
+.alarm-item {
+    background: #1c1c1e;
+    border-radius: 12px;
+    padding: 15px;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: none;
+    transition: all 0.3s ease;
+}
+
+.alarm-item:hover {
+    background: #2c2c2e;
+    transform: none;
+    box-shadow: none;
+}
+
+.alarm-time {
+    font-size: 24px;
+    font-weight: 400;
+    color: #ffffff;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: initial;
+}
+
+.alarm-days {
+    color: #8e8e93;
+    font-size: 14px;
+}
+
+.stopwatch, .timer {
+    text-align: center;
+    padding: 30px;
+    background: #000000;
+    border-radius: 16px;
+    margin: 20px 0;
+    border: none;
+    position: relative;
+    overflow: hidden;
+}
+
+.stopwatch::before, .timer::before {
+    content: none;
+}
+
+.stopwatch-time, .timer-display {
+    font-size: 84px;
+    font-weight: 200;
+    margin-bottom: 20px;
+    letter-spacing: 2px;
+    text-shadow: none;
+    color: #ffffff;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: initial;
+    position: relative;
+}
+
+.timer-input {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.timer-input input {
+    width: 80px;
+    height: 80px;
+    border: none;
+    border-radius: 10px;
+    background: #1c1c1e;
+    color: #ffffff;
+    font-size: 32px;
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+.timer-input input:focus {
+    outline: none;
+    background: #2c2c2e;
+    box-shadow: none;
+}
+
+.btn {
+    padding: 12px 24px;
+    border: none;
+    border-radius: 20px;
+    background: #1c1c1e;
+    color: #007aff;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin: 0 5px;
+    position: relative;
+    overflow: hidden;
+}
+
+.btn::before {
+    content: none;
+}
+
+.btn:hover {
+    background: #2c2c2e;
+    transform: none;
+}
+
+.btn-start {
+    background: #1c1c1e;
+    color: #34c759;
+}
+
+.btn-stop {
+    background: #1c1c1e;
+    color: #ff3b30;
+}
+
+.btn-reset {
+    background: #1c1c1e;
+    color: #007aff;
+}
+
+@media (max-width: 600px) {
+    .container {
+        padding: 10px;
+    }
+
+    .time {
+        font-size: 66px;
+    }
+
+    .date {
+        font-size: 18px;
+    }
+
+    .tabs {
+        gap: 10px;
+    }
+
+    .tab {
+        padding: 6px 12px;
+        font-size: 14px;
+    }
+
+    .stopwatch-time, .timer-display {
+        font-size: 66px;
+    }
+
+    .timer-input input {
+        width: 60px;
+        height: 60px;
+        font-size: 26px;
+    }
+}
+
+.alarm-edit-form {
+    background: #1c1c1e;
+    padding: 20px;
+    border-radius: 15px;
+    margin-top: 20px;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    color: #8e8e93;
+    font-size: 14px;
+}
+
+.edit-time {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 10px;
+    background: #2c2c2e;
+    color: #fff;
+    font-size: 16px;
+}
+
+.weekday-selector {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.weekday-selector label {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    cursor: pointer;
+    color: #8e8e93;
+}
+
+.weekday-selector input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 2px solid #8e8e93;
+    appearance: none;
+    -webkit-appearance: none;
+    outline: none;
+    cursor: pointer;
+    position: relative;
+}
+
+.weekday-selector input[type="checkbox"]:checked {
+    background-color: #007aff;
+    border-color: #007aff;
+}
+
+.weekday-selector input[type="checkbox"]:checked::after {
+    content: '';
+    position: absolute;
+    left: 6px;
+    top: 3px;
+    width: 4px;
+    height: 8px;
+    border: solid white;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+}
+
+.form-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.btn-save, .btn-cancel {
+    flex: 1;
+    padding: 12px;
+    border: none;
+    border-radius: 10px;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-save {
+    background: #007aff;
+    color: white;
+}
+
+.btn-cancel {
+    background: #ff3b30;
+    color: white;
+}
+
+.btn-save:hover, .btn-cancel:hover {
+    opacity: 0.9;
+    transform: none;
+    box-shadow: none;
+}
+
+.alarm-actions {
+    display: flex;
+    gap: 8px;
+}
+
+.btn-edit, .btn-delete {
+    padding: 8px 12px;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-edit {
+    background: transparent;
+    color: #007aff;
+}
+
+.btn-delete {
+    background: transparent;
+    color: #ff3b30;
+}
+
+.btn-edit:hover, .btn-delete:hover {
+    background: rgba(255, 255, 255, 0.1);
+    transform: none;
+    box-shadow: none;
+} 

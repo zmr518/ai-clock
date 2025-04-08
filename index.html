@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>时钟</title>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        /* iOS风格样式 */
+        body {
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: 20px;
+            padding: 20px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+        }
+
+        .tabs {
+            display: flex;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 5px;
+            margin-bottom: 20px;
+            width: 100%;
+        }
+
+        .tab {
+            flex: 1;
+            text-align: center;
+            padding: 12px 0;
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            font-size: 16px;
+            font-weight: 400;
+            min-width: 80px;
+            margin: 0 2px;
+        }
+
+        .tab.active {
+            background: rgba(255, 255, 255, 0.2);
+            color: #ffffff;
+            font-weight: 500;
+        }
+
+        .alarm-list {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border-radius: 15px;
+            margin: 10px;
+            padding: 15px;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        .alarm-item {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-radius: 12px;
+            margin: 10px 0;
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .alarm-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .alarm-time {
+            font-size: 24px;
+            font-weight: 600;
+            color: #ffffff;
+            margin-bottom: 4px;
+        }
+
+        .alarm-days {
+            font-size: 14px;
+            color: #ffffff;
+            opacity: 0.8;
+        }
+
+        .alarm-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn-edit, .btn-delete {
+            background: none;
+            border: none;
+            color: #ffffff;
+            font-size: 14px;
+            padding: 8px 12px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .btn-edit:hover, .btn-delete:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .btn-delete {
+            color: #ff3b30;
+        }
+
+        .btn-delete:hover {
+            background: rgba(255, 59, 48, 0.2);
+        }
+
+        .btn-add-alarm {
+            background: linear-gradient(135deg, #34c759 0%, #2dac4d 100%);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            padding: 15px 20px;
+            font-size: 16px;
+            font-weight: 500;
+            width: 100%;
+            margin-bottom: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(52, 199, 89, 0.3);
+        }
+
+        .btn-add-alarm:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(52, 199, 89, 0.4);
+        }
+
+        .alarm-edit-form {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border-radius: 15px;
+            padding: 20px;
+            margin: 10px;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 14px;
+            color: #ffffff;
+            margin-bottom: 8px;
+            opacity: 0.8;
+        }
+
+        .edit-time {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            font-size: 16px;
+            background: rgba(0, 0, 0, 0.2);
+            color: #ffffff;
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+        }
+
+        .weekday-selector {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+        }
+
+        .weekday-selector label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px;
+            background: rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            color: #ffffff;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .weekday-selector label:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .weekday-selector input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            accent-color: #007aff;
+        }
+
+        .form-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .btn-save, .btn-cancel {
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .btn-save {
+            background: linear-gradient(135deg, #34c759 0%, #2dac4d 100%);
+            color: white;
+            border: none;
+            box-shadow: 0 4px 12px rgba(52, 199, 89, 0.3);
+        }
+
+        .btn-save:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(52, 199, 89, 0.4);
+        }
+
+        .btn-cancel {
+            background: rgba(255, 255, 255, 0.1);
+            color: #ffffff;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+        }
+
+        .btn-cancel:hover {
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 480px) {
+            .container {
+                padding: 15px;
+            }
+
+            .alarm-list {
+                margin: 5px;
+                padding: 10px;
+            }
+
+            .alarm-item {
+                padding: 12px;
+            }
+
+            .weekday-selector {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .btn-add-alarm {
+                padding: 12px 15px;
+                font-size: 14px;
+            }
+
+            .tab {
+                padding: 10px 0;
+                font-size: 14px;
+                min-width: 60px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="tabs">
+            <a href="#" class="tab active">时钟</a>
+            <a href="#" class="tab">闹钟</a>
+            <a href="#" class="tab">秒表</a>
+            <a href="#" class="tab">计时器</a>
+        </div>
+
+        <div class="clock">
+            <div class="time">00:00:00</div>
+            <div class="date">2024年3月21日 星期四</div>
+        </div>
+
+        <div class="alarm-list" style="display: none;">
+            <button class="btn-add-alarm">添加闹钟</button>
+        </div>
+        
+        <div class="alarm-edit-form" style="display: none;">
+            <div class="form-group">
+                <label>时间</label>
+                <input type="time" class="edit-time">
+            </div>
+            <div class="form-group">
+                <label>重复</label>
+                <div class="weekday-selector">
+                    <label><input type="checkbox" value="1"> 周一</label>
+                    <label><input type="checkbox" value="2"> 周二</label>
+                    <label><input type="checkbox" value="3"> 周三</label>
+                    <label><input type="checkbox" value="4"> 周四</label>
+                    <label><input type="checkbox" value="5"> 周五</label>
+                    <label><input type="checkbox" value="6"> 周六</label>
+                    <label><input type="checkbox" value="0"> 周日</label>
+                </div>
+            </div>
+            <div class="form-actions">
+                <button class="btn-save">保存</button>
+                <button class="btn-cancel">取消</button>
+            </div>
+        </div>
+
+        <div class="stopwatch" style="display: none;">
+            <div class="stopwatch-time">00:00:00</div>
+            <div class="stopwatch-controls">
+                <button class="btn btn-start">开始</button>
+                <button class="btn btn-stop">停止</button>
+                <button class="btn btn-reset">重置</button>
+            </div>
+        </div>
+
+        <div class="timer" style="display: none;">
+            <div class="timer-input">
+                <input type="number" max="23" placeholder="时">
+                <input type="number" max="59" placeholder="分">
+                <input type="number" max="59" placeholder="秒">
+            </div>
+            <div class="timer-display">00:00:00</div>
+            <div class="timer-controls">
+                <button class="btn btn-start">开始</button>
+                <button class="btn btn-stop">停止</button>
+                <button class="btn btn-reset">重置</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 闹钟功能
+        let alarmInterval;
+        const alarmList = document.querySelector('.alarm-list');
+        const alarmEditForm = document.querySelector('.alarm-edit-form');
+        const editTimeInput = document.querySelector('.edit-time');
+        const weekdayCheckboxes = document.querySelectorAll('.weekday-selector input[type="checkbox"]');
+        let editingAlarmItem = null;
+
+        // 星期几的中文表示
+        const weekdays = ['周日', '周一', '周二', '周三', '周四', '周五', '周六'];
+
+        // 保存闹钟列表到本地存储
+        function saveAlarmsToStorage() {
+            const alarms = [];
+            document.querySelectorAll('.alarm-item').forEach(item => {
+                alarms.push({
+                    time: item.querySelector('.alarm-time').textContent,
+                    days: item.querySelector('.alarm-days').textContent
+                });
+            });
+            localStorage.setItem('alarms', JSON.stringify(alarms));
+        }
+
+        // 从本地存储加载闹钟列表
+        function loadAlarmsFromStorage() {
+            const alarms = JSON.parse(localStorage.getItem('alarms') || '[]');
+            
+            // 清空现有闹钟
+            const existingAlarms = alarmList.querySelectorAll('.alarm-item');
+            existingAlarms.forEach(alarm => alarm.remove());
+            
+            // 确保添加按钮存在
+            if (!alarmList.querySelector('.btn-add-alarm')) {
+                const addButton = document.createElement('button');
+                addButton.className = 'btn-add-alarm';
+                addButton.textContent = '添加闹钟';
+                alarmList.insertBefore(addButton, alarmList.firstChild);
+            }
+            
+            // 如果没有存储的闹钟，使用默认闹钟
+            if (alarms.length === 0) {
+                const defaultAlarms = [
+                    { time: '07:00', days: '周一 周二 周三 周四 周五' },
+                    { time: '07:30', days: '周一 周二 周三 周四 周五' },
+                    { time: '08:00', days: '周一 周二 周三 周四 周五 周六 周日' }
+                ];
+                defaultAlarms.forEach(alarm => {
+                    const alarmItem = document.createElement('div');
+                    alarmItem.className = 'alarm-item';
+                    alarmItem.innerHTML = `
+                        <div>
+                            <div class="alarm-time">${alarm.time}</div>
+                            <div class="alarm-days">${alarm.days}</div>
+                        </div>
+                        <div class="alarm-actions">
+                            <button class="btn-edit">编辑</button>
+                            <button class="btn-delete">删除</button>
+                        </div>
+                    `;
+                    alarmList.appendChild(alarmItem);
+                });
+            } else {
+                alarms.forEach(alarm => {
+                    const alarmItem = document.createElement('div');
+                    alarmItem.className = 'alarm-item';
+                    alarmItem.innerHTML = `
+                        <div>
+                            <div class="alarm-time">${alarm.time}</div>
+                            <div class="alarm-days">${alarm.days}</div>
+                        </div>
+                        <div class="alarm-actions">
+                            <button class="btn-edit">编辑</button>
+                            <button class="btn-delete">删除</button>
+                        </div>
+                    `;
+                    alarmList.appendChild(alarmItem);
+                });
+            }
+        }
+
+        // 检查闹钟时间
+        function checkAlarm() {
+            const now = new Date();
+            const currentTime = now.getHours().toString().padStart(2, '0') + ':' + 
+                              now.getMinutes().toString().padStart(2, '0');
+            const currentDay = now.getDay();
+
+            document.querySelectorAll('.alarm-item').forEach(item => {
+                const time = item.querySelector('.alarm-time').textContent;
+                const days = item.querySelector('.alarm-days').textContent;
+                
+                if (time === currentTime && days.includes(weekdays[currentDay])) {
+                    // 播放提示音
+                    const audio = new Audio('data:audio/wav;base64,UklGRl9vT19XQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YU');
+                    audio.play().catch(() => {});
+                }
+            });
+        }
+
+        // 开始检查闹钟
+        function startAlarmCheck() {
+            if (!alarmInterval) {
+                alarmInterval = setInterval(checkAlarm, 1000);
+            }
+        }
+
+        // 停止检查闹钟
+        function stopAlarmCheck() {
+            if (alarmInterval) {
+                clearInterval(alarmInterval);
+                alarmInterval = null;
+            }
+        }
+
+        // 显示编辑表单
+        function showEditForm(alarmItem) {
+            editingAlarmItem = alarmItem;
+            const time = alarmItem.querySelector('.alarm-time').textContent;
+            const days = alarmItem.querySelector('.alarm-days').textContent;
+            
+            editTimeInput.value = time;
+            weekdayCheckboxes.forEach(checkbox => {
+                checkbox.checked = days.includes(weekdays[parseInt(checkbox.value)]);
+            });
+            
+            alarmEditForm.style.display = 'block';
+        }
+
+        // 隐藏编辑表单
+        function hideEditForm() {
+            alarmEditForm.style.display = 'none';
+            editingAlarmItem = null;
+        }
+
+        // 保存闹钟设置
+        function saveAlarm() {
+            if (!editingAlarmItem) return;
+            
+            const time = editTimeInput.value;
+            const selectedDays = Array.from(weekdayCheckboxes)
+                .filter(checkbox => checkbox.checked)
+                .map(checkbox => weekdays[parseInt(checkbox.value)])
+                .join(' ');
+            
+            editingAlarmItem.querySelector('.alarm-time').textContent = time;
+            editingAlarmItem.querySelector('.alarm-days').textContent = selectedDays;
+            
+            hideEditForm();
+            saveAlarmsToStorage(); // 保存到本地存储
+        }
+
+        // 删除闹钟
+        function deleteAlarm(alarmItem) {
+            if (confirm('确定要删除这个闹钟吗？')) {
+                alarmItem.remove();
+                saveAlarmsToStorage(); // 保存到本地存储
+            }
+        }
+
+        // 添加新闹钟
+        function addNewAlarm() {
+            const alarmItem = document.createElement('div');
+            alarmItem.className = 'alarm-item';
+            alarmItem.innerHTML = `
+                <div>
+                    <div class="alarm-time">00:00</div>
+                    <div class="alarm-days">周一 周二 周三 周四 周五</div>
+                </div>
+                <div class="alarm-actions">
+                    <button class="btn-edit">编辑</button>
+                    <button class="btn-delete">删除</button>
+                </div>
+            `;
+            alarmList.appendChild(alarmItem);
+            showEditForm(alarmItem); // 立即显示编辑表单
+        }
+
+        // 事件监听
+        document.addEventListener('click', (e) => {
+            const target = e.target;
+            
+            if (target.classList.contains('btn-add-alarm')) {
+                addNewAlarm();
+            } else if (target.classList.contains('btn-edit')) {
+                const alarmItem = target.closest('.alarm-item');
+                showEditForm(alarmItem);
+            } else if (target.classList.contains('btn-delete')) {
+                const alarmItem = target.closest('.alarm-item');
+                deleteAlarm(alarmItem);
+            } else if (target.classList.contains('btn-save')) {
+                saveAlarm();
+            } else if (target.classList.contains('btn-cancel')) {
+                hideEditForm();
+            }
+        });
+
+        // 标签切换
+        const tabs = document.querySelectorAll('.tab');
+        const sections = document.querySelectorAll('.clock, .alarm-list, .stopwatch, .timer');
+
+        tabs.forEach((tab, index) => {
+            tab.addEventListener('click', (e) => {
+                e.preventDefault();
+                
+                // 更新标签状态
+                tabs.forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+                
+                // 显示对应部分
+                sections.forEach((section, i) => {
+                    section.style.display = i === index ? 'block' : 'none';
+                });
+
+                // 如果是闹钟标签，加载闹钟列表
+                if (index === 1) {
+                    loadAlarmsFromStorage();
+                }
+            });
+        });
+
+        // 页面加载时加载闹钟并开始检查
+        document.addEventListener('DOMContentLoaded', () => {
+            loadAlarmsFromStorage();
+            startAlarmCheck();
+        });
+
+        // 页面卸载时停止检查闹钟
+        window.addEventListener('unload', stopAlarmCheck);
+    </script>
+</body>
+</html> 
