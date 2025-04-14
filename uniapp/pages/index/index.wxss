@@ -1,0 +1,33 @@
+.container {
+  padding: 20px;
+}
+
+.clock {
+  padding: 40px 20px;
+  text-align: center;
+  margin: 20px;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  border-radius: 15px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.time {
+  font-size: 48px;
+  font-weight: 600;
+  margin-bottom: 10px;
+  color: #ffffff;
+}
+
+.date {
+  font-size: 16px;
+  opacity: 0.8;
+  color: #ffffff;
+}
+
+page {
+  background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+  min-height: 100vh;
+  color: #ffffff;
+} 

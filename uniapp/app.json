@@ -1,0 +1,34 @@
+{
+  "pages": [
+    "pages/clock/clock",
+    "pages/alarm/alarm"
+  ],
+  "window": {
+    "navigationBarTextStyle": "white",
+    "navigationBarTitleText": "时钟",
+    "navigationBarBackgroundColor": "#1a1a1a",
+    "backgroundColor": "#1a1a1a"
+  },
+  "tabBar": {
+    "color": "#999999",
+    "selectedColor": "#4CAF50",
+    "backgroundColor": "#ffffff",
+    "borderStyle": "black",
+    "list": [
+      {
+        "pagePath": "pages/clock/clock",
+        "text": "时钟",
+        "iconPath": "static/images/clock.png",
+        "selectedIconPath": "static/images/clock-active.png"
+      },
+      {
+        "pagePath": "pages/alarm/alarm",
+        "text": "闹钟",
+        "iconPath": "static/images/alarm.png",
+        "selectedIconPath": "static/images/alarm-active.png"
+      }
+    ]
+  },
+  "requiredBackgroundModes": ["audio"],
+  "usingComponents": {}
+} 

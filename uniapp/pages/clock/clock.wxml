@@ -1,0 +1,7 @@
+<!--pages/clock/clock.wxml-->
+<view class="container">
+  <view class="clock">
+    <view class="time">{{time}}</view>
+    <view class="date">{{date}}</view>
+  </view>
+</view>

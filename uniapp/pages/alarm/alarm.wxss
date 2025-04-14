@@ -1,0 +1,172 @@
+.container {
+  padding: 20px;
+}
+
+.glass-effect {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  border-radius: 15px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.alarm-list {
+  padding: 20px;
+  margin: 20px;
+}
+
+.alarm-item {
+  margin: 10px 0;
+  padding: 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  opacity: 1;
+  transition: opacity 0.3s;
+}
+
+.alarm-item.disabled {
+  opacity: 0.6;
+}
+
+.alarm-item.disabled .alarm-time,
+.alarm-item.disabled .alarm-days {
+  color: #999;
+}
+
+.alarm-time {
+  font-size: 24px;
+  font-weight: 600;
+  margin-bottom: 4px;
+  color: #ffffff;
+}
+
+.alarm-days {
+  font-size: 14px;
+  opacity: 0.8;
+  color: #ffffff;
+}
+
+.alarm-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.alarm-edit,
+.alarm-delete {
+  padding: 4px 8px;
+  font-size: 14px;
+  border-radius: 4px;
+}
+
+.alarm-edit {
+  background: #4CAF50;
+  color: white;
+}
+
+.alarm-delete {
+  background: #f44336;
+  color: white;
+}
+
+switch {
+  transform: scale(0.8);
+}
+
+.btn {
+  border-radius: 12px;
+  padding: 15px 20px;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, #34c759 0%, #2dac4d 100%);
+  color: white;
+  border: none;
+  width: 100%;
+}
+
+.btn-secondary {
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.btn-edit, .btn-delete {
+  background: none;
+  border: none;
+  font-size: 14px;
+  padding: 8px 12px;
+  border-radius: 5px;
+  color: #ffffff;
+  line-height: 1;
+  min-height: auto;
+}
+
+.btn-delete {
+  color: #ff3b30;
+}
+
+.alarm-edit-form {
+  padding: 20px;
+  position: fixed;
+  left: 20px;
+  right: 20px;
+  bottom: 20px;
+  z-index: 100;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.label {
+  display: block;
+  font-size: 14px;
+  margin-bottom: 8px;
+  opacity: 0.8;
+  color: #ffffff;
+}
+
+.picker {
+  background: rgba(0, 0, 0, 0.2);
+  padding: 12px;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+}
+
+.weekday-selector {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+}
+
+.weekday-item {
+  padding: 10px;
+  text-align: center;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+}
+
+.weekday-item.active {
+  background: rgba(52, 199, 89, 0.2);
+  border-color: #34c759;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+page {
+  background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+  min-height: 100vh;
+  color: #ffffff;
+} 

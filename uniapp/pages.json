@@ -1,0 +1,45 @@
+{
+  "pages": [
+    {
+      "path": "pages/clock/clock",
+      "style": {
+        "navigationBarTitleText": "时钟",
+        "navigationBarBackgroundColor": "#1a1a1a",
+        "navigationBarTextStyle": "white"
+      }
+    },
+    {
+      "path": "pages/alarm/alarm",
+      "style": {
+        "navigationBarTitleText": "闹钟",
+        "navigationBarBackgroundColor": "#1a1a1a",
+        "navigationBarTextStyle": "white"
+      }
+    }
+  ],
+  "globalStyle": {
+    "navigationBarTextStyle": "white",
+    "navigationBarTitleText": "时钟",
+    "navigationBarBackgroundColor": "#1a1a1a",
+    "backgroundColor": "#1a1a1a"
+  },
+  "tabBar": {
+    "color": "#999999",
+    "selectedColor": "#34c759",
+    "backgroundColor": "#1a1a1a",
+    "list": [
+      {
+        "pagePath": "pages/clock/clock",
+        "text": "时钟",
+        "iconPath": "/static/images/clock.png",
+        "selectedIconPath": "/static/images/clock-active.png"
+      },
+      {
+        "pagePath": "pages/alarm/alarm",
+        "text": "闹钟",
+        "iconPath": "/static/images/alarm.png",
+        "selectedIconPath": "/static/images/alarm-active.png"
+      }
+    ]
+  }
+} 

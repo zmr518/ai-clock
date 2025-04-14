@@ -1,0 +1,42 @@
+<view class="container">
+  <view class="alarm-list glass-effect">
+    <button class="btn btn-primary" bindtap="showAddAlarm">添加闹钟</button>
+    <view class="alarm-item {{item.enabled ? '' : 'disabled'}}" wx:for="{{alarms}}" wx:key="index">
+      <view class="alarm-info">
+        <view class="alarm-time">{{item.time}}</view>
+        <view class="alarm-days">{{item.days}}</view>
+      </view>
+      <view class="alarm-actions">
+        <switch checked="{{item.enabled}}" bindtap="toggleAlarm" data-index="{{index}}" />
+        <button class="alarm-edit" bindtap="editAlarm" data-index="{{index}}">编辑</button>
+        <button class="alarm-delete" bindtap="deleteAlarm" data-index="{{index}}">删除</button>
+      </view>
+    </view>
+  </view>
+
+  <!-- 编辑表单 -->
+  <view class="alarm-edit-form glass-effect" wx:if="{{showEditForm}}">
+    <view class="form-group">
+      <text class="label">时间</text>
+      <picker mode="time" value="{{editTime}}" bindchange="onTimeChange">
+        <view class="picker">{{editTime}}</view>
+      </picker>
+    </view>
+    <view class="form-group">
+      <text class="label">重复</text>
+      <view class="weekday-selector">
+        <view class="weekday-item {{selectedDays.includes(index) ? 'active' : ''}}"
+              wx:for="{{weekdays}}" 
+              wx:key="index"
+              bindtap="toggleDay"
+              data-index="{{index}}">
+          {{item}}
+        </view>
+      </view>
+    </view>
+    <view class="form-actions">
+      <button class="btn btn-primary" bindtap="saveAlarm">保存</button>
+      <button class="btn btn-secondary" bindtap="hideEditForm">取消</button>
+    </view>
+  </view>
+</view> 
